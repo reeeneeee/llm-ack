@@ -1,0 +1,9 @@
+[project]
+name = "llmack"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "mitmproxy>=11.0.2",
+]
