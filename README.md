@@ -6,21 +6,26 @@ Taking their inspiration from the practice of Indigenous land acknowledgements, 
 
 We hope to expand more operating systems, LLM providers, and varieties of moral complicity in the future.
 
-(continued)
-
 Currently, there are separate scripts for intercepting cURL requests to the Anthropic API and browser requests through claude.ai.
 
-Step 0: Get an [Anthropic API key](https://docs.anthropic.com/en/docs/initial-setup) and set it as an environmental variable
+**Step 0** 
+
+Get an [Anthropic API key](https://docs.anthropic.com/en/docs/initial-setup) and set it as an environmental variable:
+
 `export ANTHROPIC_API_KEY='your-api-key-here'`
 
-Step 1: Start http proxy with the desired script
+**Step 1**
+
+Start the http proxy with the desired script:
+
 `python3 startproxy.py <script.py>`
 
-Step 2:
+**Step 2**
 
 * To make a cURL request with a given prompt:
+  
 `sh sample_claude_call.sh "give me a knock knock joke"`
 
-* To chat with Claude, simply navigate to claude.ai and initiate a conversation.
+* To chat with Claude, navigate to [claude.ai](https://claude.ai/) and initiate a conversation.
 
 
