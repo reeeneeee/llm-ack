@@ -16,9 +16,11 @@ Get an [Anthropic API key](https://docs.anthropic.com/en/docs/initial-setup) and
 
 **Step 1**
 
+Make sure you have [`uv`](https://github.com/astral-sh/uv) installed. If you have Homebrew set up you can just do `brew install uv`.
+
 Start the http proxy with the desired script:
 
-`python3 startproxy.py <script.py>`
+`uv run startproxy.py <script.py>`
 
 **Step 2**
 
