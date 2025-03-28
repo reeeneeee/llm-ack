@@ -125,9 +125,14 @@ def main():
     )  # note: we use mitmdump because it has no tty requirement
     print("Press Ctrl+C to stop the proxy")
 
+    try:
+        script_name = sys.argv[1]
+    except IndexError:
+        script_name = "llmack.py"
+
     # Run mitmdump with the request modificationscript
     try:
-        subprocess.run(["mitmdump", "-s", "llmack.py"])
+        subprocess.run(["mitmdump", "-s", script_name])
     except KeyboardInterrupt:
         print("\nStopping proxy...")
         # Clean up proxy settings
