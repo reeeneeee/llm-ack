@@ -1,3 +1,9 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#     "mitmproxy",
+# ]
+# ///
 import os
 import subprocess
 import sys
@@ -34,29 +40,6 @@ def compare_cert_fingerprint():
     )
 
     return keychain_fingerprint == openssl_fingerprint
-
-
-def check_brew_installed():
-    try:
-        subprocess.run(["which", "brew"], check=True, capture_output=True)
-        return True
-    except subprocess.CalledProcessError:
-        return False
-
-
-def install_mitmproxy():
-    if not check_brew_installed():
-        print("Homebrew is not installed. Please install Homebrew first:")
-        print("Visit https://brew.sh/ for installation instructions")
-        sys.exit(1)
-
-    print("Installing mitmproxy using Homebrew...")
-    try:
-        subprocess.run(["brew", "install", "mitmproxy"], check=True)
-        print("mitmproxy installed successfully!")
-    except subprocess.CalledProcessError as e:
-        print(f"Error installing mitmproxy: {e}")
-        sys.exit(1)
 
 
 def setup_proxy():
@@ -126,18 +109,6 @@ def main():
     if platform.system() != "Darwin":
         print("This script is currently only supported on macOS")
         sys.exit(1)
-
-    # First, ensure mitmproxy is installed
-    try:
-        subprocess.run(["which", "mitmdump"], check=True, capture_output=True)
-    except subprocess.CalledProcessError:
-        print("mitmproxy is not installed.")
-        response = input("Would you like to install it now? (y/n): ")
-        if response.lower() == "y":
-            install_mitmproxy()
-        else:
-            print("Please install mitmproxy manually using: brew install mitmproxy")
-            sys.exit(1)
 
     # Generate certificate if it doesn't exist
     cert_path = os.path.expanduser("~/.mitmproxy/mitmproxy-ca-cert.pem")
