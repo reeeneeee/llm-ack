@@ -162,6 +162,8 @@ def main():
         # Clean up proxy settings
         subprocess.run(["networksetup", "-setwebproxystate", "Wi-Fi", "off"])
         subprocess.run(["networksetup", "-setsecurewebproxystate", "Wi-Fi", "off"])
+        subprocess.run(["unset", "http_proxy"])
+        subprocess.run(["unset", "https_proxy"])
         print("Proxy settings cleaned up")
 
 
