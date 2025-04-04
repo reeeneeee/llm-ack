@@ -6,7 +6,9 @@ We hope to expand to more LLM providers and varieties of moral complicity in the
 
 **Step 0** 
 
-Git clone this repo and make sure you have [`uv`](https://github.com/astral-sh/uv) installed. If you have Homebrew set up you can just do `brew install uv`.
+Git clone this repo: `git clone https://github.com/reeeneeee/llm-ack.git`
+
+Also, make sure you have [`uv`](https://github.com/astral-sh/uv) installed (if you have homebrew set up you can just do `brew install uv`)
 
 **Step 1**
 
@@ -16,17 +18,17 @@ Start the http proxy: `uv run startproxy.py`
 
 * To make a cURL request with a given prompt:
 
-  **Anthropic** `zsh anthropic_request.sh "tell me a joke"` (optionally set `-m model_name`)
+  **Anthropic** `sh anthropic_request.sh "tell me a joke"` (optionally set `-m model_name`)
 
-  **OpenAI** `zsh openai_request.sh "tell me a joke"` (optionally set `-m model_name`)
+  **OpenAI** `sh openai_request.sh "tell me a joke"` (optionally set `-m model_name`)
 
   _Note: make sure you have the relevant API key set as an environmental variable._
 
 * To use a web interface:
 
-  **Anthropic** Navigate to [claude.ai](https://claude.ai/) and initiate a conversation.
+  **Anthropic** Navigate to <a href="https://claude.ai/" target="_blank">claude.ai</a> and initiate a conversation.
 
-  **OpenAI** Navigate to [chatgpt.com](https://chatgpt.com/) and initiate a conversation.
+  **OpenAI** Navigate to <a href="https://chatgpt.com/" target="_blank">chatgpt.com</a> and initiate a conversation.
 
 
 
