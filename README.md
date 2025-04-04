@@ -18,9 +18,9 @@ Start the http proxy: `uv run startproxy.py`
 
 * To make a cURL request with a given prompt:
 
-  **Anthropic** `sh anthropic_request.sh "tell me a joke"` (optionally set `-m model_name`)
+  **Anthropic** `sh anthropic_request.sh "tell me a joke"` (optionally set `-m model_name`, see full list [here](https://docs.anthropic.com/en/docs/about-claude/models/all-models))
 
-  **OpenAI** `sh openai_request.sh "tell me a joke"` (optionally set `-m model_name`)
+  **OpenAI** `sh openai_request.sh "tell me a joke"` (optionally set `-m model_name`, see full list [here](https://platform.openai.com/docs/models))
 
   _Note: make sure you have the relevant API key set as an environmental variable._
 
