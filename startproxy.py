@@ -128,7 +128,7 @@ def main():
     try:
         script_name = sys.argv[1]
     except IndexError:
-        script_name = "llmack.py"
+        script_name = "response_intercept.py"
 
     # Run mitmdump with the request modificationscript
     try:
