@@ -16,6 +16,8 @@ def compare_cert_fingerprint():
         ["security", "find-certificate", "-c", "mitmproxy", "-Z"],
         capture_output=True,
     )
+    print(keychain_proc.stdout).decode("utf-8")
+    return
     keychain_fingerprint = (
         keychain_proc.stdout.decode("utf-8")
         .splitlines()[0]
@@ -43,6 +45,7 @@ def compare_cert_fingerprint():
 
 
 def setup_proxy():
+    print("setting up proxy")
     # Set up the proxy server
     try:
         subprocess.run(
@@ -115,10 +118,11 @@ def main():
     if not os.path.exists(cert_path):
         generate_cert()
 
-    # Set up proxy and install certificate
+#     # Set up proxy and install certificate
     setup_proxy()
-    if not compare_cert_fingerprint():
-        install_cert()
+    install_cert()
+    # if not compare_cert_fingerprint():
+    #     install_cert()
 
     print(
         "\nStarting mitmdump..."
