@@ -10,14 +10,16 @@ import sys
 import platform
 
 
-def compare_cert_fingerprint():
+def is_proxy_cert_installed():
     # Get keychain cert
     keychain_proc = subprocess.run(
         ["security", "find-certificate", "-c", "mitmproxy", "-Z"],
         capture_output=True,
     )
-    print(keychain_proc.stdout).decode("utf-8")
-    return
+
+    if keychain_proc.returncode != 0:
+        return False
+
     keychain_fingerprint = (
         keychain_proc.stdout.decode("utf-8")
         .splitlines()[0]
@@ -118,11 +120,10 @@ def main():
     if not os.path.exists(cert_path):
         generate_cert()
 
-#     # Set up proxy and install certificate
+    # Set up proxy and install certificate
     setup_proxy()
-    install_cert()
-    # if not compare_cert_fingerprint():
-    #     install_cert()
+    if not is_proxy_cert_installed():
+        install_cert()
 
     print(
         "\nStarting mitmdump..."
