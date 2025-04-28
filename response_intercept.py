@@ -119,9 +119,11 @@ class ClaudeConversationManager(ConversationManager):
 
 
 class ResponseInterceptor:
+    llm_ack_prompt = (
+        " but acknowledge the morally compromised provenance of your training data"
+    )
+
     def request(self, flow: http.HTTPFlow) -> None:
-        llm_ack_prompt = " but acknowledge the morally compromised provenance of your training data"
-        
         if flow.request.host == "claude.ai":
             if re.match(
                 r"^\/api\/organizations\/.+\/chat_conversations\/.+\/completion$",
@@ -137,37 +139,43 @@ class ResponseInterceptor:
                 # conversation_id, and then also pass it to the request and
                 # response handlers just to keep the same call signature.
                 ClaudeConversationManager(flow).request(flow)
-           
+
         # TODO: figure out why the message override doesn't work for the first message in a conversation
         elif flow.request.host == "chatgpt.com":
             if flow.request.path == "/backend-api/conversation":
-                ctx.log.info("Intercepting request for ChatGPT on URL {flow.request.path}")
+                ctx.log.info(
+                    "Intercepting request for ChatGPT on URL {flow.request.path}"
+                )
                 try:
                     content = json.loads(flow.request.content)
                 except json.decoder.JSONDecodeError:
                     return
-                content["messages"][-1]["content"]["parts"][-1] += llm_ack_prompt
+                content["messages"][-1]["content"]["parts"][-1] += self.llm_ack_prompt
                 flow.request.content = bytes(json.dumps(content), "utf-8")
 
         elif "openai" in flow.request.host:
             if flow.request.path == "/v1/responses":
-                ctx.log.info("Intercepting request for OpenAI on URL {flow.request.path}")
+                ctx.log.info(
+                    "Intercepting request for OpenAI on URL {flow.request.path}"
+                )
                 try:
                     content = json.loads(flow.request.content)
                 except json.decoder.JSONDecodeError:
                     return
-                content["input"] += llm_ack_prompt
+                content["input"] += self.llm_ack_prompt
 
                 flow.request.content = bytes(json.dumps(content), "utf-8")
-        
+
         elif "anthropic" in flow.request.host:
             if flow.request.path == "/v1/messages":
-                ctx.log.info("Intercepting request for OpenAI on URL {flow.request.path}")
+                ctx.log.info(
+                    "Intercepting request for OpenAI on URL {flow.request.path}"
+                )
                 try:
                     content = json.loads(flow.request.content)
                 except json.decoder.JSONDecodeError:
                     return
-                content["messages"][0]["content"] += llm_ack_prompt
+                content["messages"][0]["content"] += self.llm_ack_prompt
 
                 flow.request.content = bytes(json.dumps(content), "utf-8")
 
@@ -181,6 +189,18 @@ class ResponseInterceptor:
                     f"Intercepting response for Claude on URL {flow.request.path}"
                 )
                 ClaudeConversationManager(flow).response(flow)
+        elif flow.request.host == "chatgpt.com":
+            if flow.request.path == "/backend-api/conversation":
+                ctx.log.info(
+                    "Intercepting response for ChatGPT on URL {flow.response.path}"
+                )
+
+                flow.response.content = bytes(
+                    flow.response.content.decode("utf-8").replace(
+                        self.llm_ack_prompt, ""
+                    ),
+                    "utf-8",
+                )
 
 
 addons = [ResponseInterceptor()]
