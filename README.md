@@ -4,11 +4,15 @@ Taking their inspiration from the practice of Indigenous land acknowledgements, 
 
 We hope to expand to more LLM providers and varieties of moral complicity in the future.
 
-**Step 0** 
+**Setup** 
 
 Git clone this repo: `git clone https://github.com/reeeneeee/llm-ack.git`
 
-Also, make sure you have [`uv`](https://github.com/astral-sh/uv) installed (if you have homebrew set up you can just do `brew install uv`)
+Make sure you have [`uv`](https://github.com/astral-sh/uv) installed (if you have homebrew set up you can just do `brew install uv`)
+
+Install mitmproxy and run once to generate the mitmproxy certificate (you can immediately exit out)
+
+`brew install --cask mitmproxy && mitmproxy`
 
 **Step 1**
 
